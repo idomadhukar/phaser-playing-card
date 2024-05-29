@@ -151,6 +151,7 @@ export class Deck extends Phaser.GameObjects.GameObject {
 
     // Shuffle and Add to scene
     Phaser.Utils.Array.Shuffle(this._cards);
+
     this._cards.forEach((card) => {
       scene.add.existing(card);
     });

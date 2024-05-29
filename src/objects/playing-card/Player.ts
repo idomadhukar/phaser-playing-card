@@ -59,7 +59,7 @@ export class Player extends Phaser.GameObjects.GameObject {
   }
 
   public addCards(cards: Array<Card>) {
-    cards.forEach((card, index) => {
+    cards.forEach((card) => {
       this.addCard(card);
     });
   }
@@ -73,7 +73,11 @@ export class Player extends Phaser.GameObjects.GameObject {
     card.removeAllListeners();
 
     this.hand.push(card);
-    card.setDepth(this.hand.length);
+    const index = this.hand.indexOf(card);
+    this.hand.forEach((card, index) => {
+      card.setDepth(index);
+    });
+    // card.setDepth(this.hand.length);
 
     this.playCardMoveAnimation(card, this.hand.length - 1, {
       isFaceUp,
@@ -122,6 +126,7 @@ export class Player extends Phaser.GameObjects.GameObject {
           rotation,
           onAnimationComplete: () => {
             Utils.removeCardFromArray(card, this.hand);
+            card.setDepth(index);
             this.arrangeThrownCards(card);
             if (onAnimationComplete) onAnimationComplete();
           },
